@@ -1,0 +1,13 @@
+{
+  "name": "digibyte-nownode-example",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "digibyte": "^0.15.8",
+    "dotenv": "^8.2.0",
+    "request": "^2.88.2"
+  }
+}
