@@ -38,6 +38,15 @@ class DigiByteService
         return resultJson.balance
     }
 
+    async getTransactionInfo(tx)
+    {
+        let url = this.EXPLORER_URL + 'tx/' + tx
+        let options = this.getNowNodesOptions()
+        let response = await this._sendRequestToUrl(url, options)
+
+        return JSON.parse(response.toString())
+    }
+
     async getUnspentTransactionOutput(address)
     {
         let url = this.EXPLORER_URL + 'ut' + 'xo/' + address
@@ -47,7 +56,7 @@ class DigiByteService
         return JSON.parse(response.toString())
     }
 
-    async sendFunds(sourcePrivateKeyWIF, sourceAddress, operations, callbackFunction)
+    async sendFunds(sourcePrivateKeyWIF, sourceAddress, operations, callbackFunction, data)
     {
         let sourcePrivateKey = DigiByte.PrivateKey.fromWIF(sourcePrivateKeyWIF)
 
@@ -63,10 +72,13 @@ class DigiByteService
 
                     let changePrivateKey    = new DigiByte.PrivateKey()
                     let changeAddress       = changePrivateKey.toAddress()
-                    let transaction         = this._makeTransactionFromFromUTXOs(UTXOs)
+                    let transaction         = this._makeTransactionFromFromUTXOs(UTXOs, sourceAddress)
                     this.satoshiLeft        = parseInt(balance)
                     transaction             = this._addTransactionToFromOperations(transaction, operations, sourceAddress)
 
+                    if (data) {
+                        transaction.addData(data)
+                    }
                     transaction.change(changeAddress)
                     transaction.sign(sourcePrivateKey)
 
@@ -82,9 +94,10 @@ class DigiByteService
 
                     resolve(Object.assign(result, txData))
                     if (callbackFunction) {
-                        callbackFunction('ok', 'deposited')
+                        callbackFunction('ok', 'deposited to pay fee for issue');
                     }
                 }, error => {
+                    console.log('Error happened', error)
                     if (callbackFunction) {
                         callbackFunction('error', error)
                     }

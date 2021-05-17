@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "a0da6b61-bc67-4eee-8c03-461f487f0d6a",
+		"name": "DigiByteService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate wallet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "command",
+						"value": "test-connect",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "command",
+							"value": "test-connect",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:60001?command=test-connect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"query": [
+						{
+							"key": "command",
+							"value": "test-connect"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "address",
+							"value": "DHKvkQUKWPumhyWF987UzX1TTKgadf72ua",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:60001/check-wallet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"path": [
+						"check-wallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get utxo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "address",
+							"value": "DHKvkQUKWPumhyWF987UzX1TTKgadf72ua",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:60001/get-unspent-txo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"path": [
+						"get-unspent-txo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send funds",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "address",
+							"value": "DAzVirvCyw7PFTCVyjxJcjMrBxyZBcP6Ks",
+							"type": "text"
+						},
+						{
+							"key": "privateKey",
+							"value": "L2jhhbaBtv8num3keE51d5L3tKVJAmBMGqcL6Z1CcLMSR9LFgycA",
+							"type": "text"
+						},
+						{
+							"key": "data",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:60001/send-funds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"path": [
+						"send-funds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get tx info",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "tx",
+							"value": "sometx",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:60001/get-unspent-txo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"path": [
+						"get-unspent-txo"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
