@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo Starting...
+node start.js 2>> start.log >> start.log &

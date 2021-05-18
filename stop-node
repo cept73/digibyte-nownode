@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pid=`ps -aux | grep node | grep start.js | awk '{print $2}'`
+if [[ $pid != '' ]]; then
+    echo Stopping: `ps -aux | grep node | grep start.js | awk '{print $12 $13}'`
+    kill $pid
+else
+    echo "Service is not running"
+fi
