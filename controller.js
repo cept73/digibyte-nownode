@@ -112,8 +112,12 @@ class Controller
         const sourceAddress     = paramsArray['address']
         const sourcePrivateKey  = paramsArray['privateKey']
         const toAddress         = process.env.ADMIN_ADDRESS
-        const amount            = parseFloat(process.env.AMOUNT_TO_DEPOSIT) - (this.DigiByteServiceInstance.FEE_TO_SEND_DGB / this.DigiByteServiceInstance.SAT_IN_DGB)
-
+        let amountToSend        = paramsArray['amount']
+        if (!amountToSend) {
+            amountToSend        = process.env.AMOUNT_TO_DEPOSIT
+        }
+        let paymentFee          = this.DigiByteServiceInstance.FEE_TO_SEND_DGB / this.DigiByteServiceInstance.SAT_IN_DGB
+        let amount              = parseFloat(amountToSend) - paymentFee
         let operations          = [{ address: toAddress, value: amount, times: 1 }]
 
         await this.DigiByteServiceInstance.sendFunds(sourcePrivateKey, sourceAddress, operations, console.log).then(
