@@ -7,6 +7,7 @@ You can then define how much you expect a user to pay for your service, for exam
 
 ## Configuration
 
+0. Install Node v12
 1. Edit .env.example and put your NOWNodes API key in there, save it as .env
 2. Modify the example.js
 3. Run <pre>npm update && npm install</p>
