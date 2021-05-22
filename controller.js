@@ -1,5 +1,4 @@
 const { DigiByteService } = require('./DigiByteService.js')
-const { process } = require('process');
 require('dotenv').config()
 
 
