@@ -111,15 +111,13 @@ class Controller
         const paramsArray       = params // JSON.parse(params)
         const sourceAddress     = paramsArray['address']
         const sourcePrivateKey  = paramsArray['privateKey']
-
-        let amountToSend        = paramsArray['amount']
         let paymentFee          = this.DigiByteServiceInstance.FEE_TO_SEND_DGB / this.DigiByteServiceInstance.SAT_IN_DGB
-        let amount              = parseFloat(amountToSend) - paymentFee
 
         let operations;
         if (paramsArray['operations']) {
             operations = paramsArray['operations']
         } else {
+            let amount = parseFloat(paramsArray['amount']) - paymentFee
             operations = [{ address: process.env.ADMIN_ADDRESS, value: amount, times: 1 }]
         }
 
