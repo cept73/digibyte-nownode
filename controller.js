@@ -115,33 +115,33 @@ class Controller
 
         let operations;
 
-	let operationInfoByIndex = function (params, index) {
-	    let indexBase = 'operations[' + index + ']';
-	    let address = paramsArray[indexBase + '[addr]'];
-	    if (!address) {
-		return null;
-	    }
+	    let operationInfoByIndex = function (params, index) {
+            let indexBase = 'operations[' + index + ']';
+            let address = paramsArray[indexBase + '[addr]'];
+            if (!address) {
+                return null;
+            }
 
-	    let value = paramsArray[indexBase + '[value]'];
-	    let times = paramsArray[indexBase + '[times]'];
-	    
-	    return {
-		address	: address,
-		value	: value,
-		times	: times
-	    }
-	}
+            let value = paramsArray[indexBase + '[value]'];
+            let times = paramsArray[indexBase + '[times]'];
 
-	let info = operationInfoByIndex(paramsArray, 0);
-	if (info) {
-	    operations = [];
-	    let index = 0;
-	    while (info) {
-		operations.push(info);
+            return {
+                address	: address,
+                value	: value,
+                times	: times
+            }
+        }
 
-		index ++;
-		info = operationInfoByIndex(paramsArray, index);
-	    }
+        let info = operationInfoByIndex(paramsArray, 0);
+        if (info) {
+            operations = []
+            let index = 0
+            while (info) {
+                operations.push(info)
+
+                index ++
+                info = operationInfoByIndex(paramsArray, index)
+            }
         } else {
             let amount = parseFloat(paramsArray['overallSum']) - paymentFee
             operations = [{ address: process.env.ADMIN_ADDRESS, value: amount, times: 1 }]
