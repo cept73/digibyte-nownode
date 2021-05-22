@@ -178,7 +178,7 @@ class DigiByteService
 
                 this.satoshiLeft -= sum
                 if (this.satoshiLeft < this.FEE_TO_SEND_DGB) {
-                    console.log('!!! No satoshi left in send-us')
+                    console.log('!!! No satoshi left in send-us: ' + this.satoshiLeft  + '<' + this.FEE_TO_SEND_DGB)
                 }
             }
         }
