@@ -1,5 +1,5 @@
 {
-    "name": "digibyte-nownode",
+    "name": "cept73/digibyte-nownode",
     "description": "library to interact with DGB via Node.js + NowNode API",
     "require": {
     },
