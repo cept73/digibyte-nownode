@@ -8,7 +8,18 @@ You can then define how much you expect a user to pay for your service, for exam
 ## Configuration
 
 0. Install Node v12
+
+For Ubuntu:   
+<pre>
+   #!/bin/bash
+
+    # Using Ubuntu
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+</pre>
+
 1. Edit .env.example and put your NOWNodes API key in there, save it as .env
 2. Modify the example.js
-3. Run <pre>npm update && npm install</p>
-4. Run <pre>npm start</p>
+3. Install dependencies <pre>npm update && npm install</pre>
+4. Compile weak-napi <pre>cd node_modules/weak-napi && ./build && make</pre>
+5. Run <pre>npm start</pre>
