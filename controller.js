@@ -1,4 +1,5 @@
 const { DigiByteService } = require('./DigiByteService.js')
+const { process } = require('process');
 require('dotenv').config()
 
 
@@ -111,14 +112,17 @@ class Controller
         const paramsArray       = params // JSON.parse(params)
         const sourceAddress     = paramsArray['address']
         const sourcePrivateKey  = paramsArray['privateKey']
-        const toAddress         = process.env.ADMIN_ADDRESS
+
         let amountToSend        = paramsArray['amount']
-        if (!amountToSend) {
-            amountToSend        = process.env.AMOUNT_TO_DEPOSIT
-        }
         let paymentFee          = this.DigiByteServiceInstance.FEE_TO_SEND_DGB / this.DigiByteServiceInstance.SAT_IN_DGB
         let amount              = parseFloat(amountToSend) - paymentFee
-        let operations          = [{ address: toAddress, value: amount, times: 1 }]
+
+        let operations;
+        if (paramsArray['operations']) {
+            operations = paramsArray['operations']
+        } else {
+            operations = [{ address: process.env.ADMIN_ADDRESS, value: amount, times: 1 }]
+        }
 
         await this.DigiByteServiceInstance.sendFunds(sourcePrivateKey, sourceAddress, operations, console.log).then(
             (result) => {
