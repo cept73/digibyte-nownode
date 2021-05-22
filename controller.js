@@ -114,10 +114,36 @@ class Controller
         let paymentFee          = this.DigiByteServiceInstance.FEE_TO_SEND_DGB / this.DigiByteServiceInstance.SAT_IN_DGB
 
         let operations;
-        if (paramsArray['operations']) {
-            operations = paramsArray['operations']
+
+	let operationInfoByIndex = function (params, index) {
+	    let indexBase = 'operations[' + index + ']';
+	    let address = paramsArray[indexBase + '[addr]'];
+	    if (!address) {
+		return null;
+	    }
+
+	    let value = paramsArray[indexBase + '[value]'];
+	    let times = paramsArray[indexBase + '[times]'];
+	    
+	    return {
+		address	: address,
+		value	: value,
+		times	: times
+	    }
+	}
+
+	let info = operationInfoByIndex(paramsArray, 0);
+	if (info) {
+	    operations = [];
+	    let index = 0;
+	    while (info) {
+		operations.push(info);
+
+		index ++;
+		info = operationInfoByIndex(paramsArray, index);
+	    }
         } else {
-            let amount = parseFloat(paramsArray['amount']) - paymentFee
+            let amount = parseFloat(paramsArray['overallSum']) - paymentFee
             operations = [{ address: process.env.ADMIN_ADDRESS, value: amount, times: 1 }]
         }
 
