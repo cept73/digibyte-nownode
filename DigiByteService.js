@@ -6,7 +6,7 @@ class DigiByteService
 {
     EXPLORER_URL    = 'https://dgb.nownodes.io/api/v2/'
     SAT_IN_DGB      = 100000000
-    FEE_TO_SEND_DGB = 0.0001 * this.SAT_IN_DGB
+    FEE_TO_SEND_DGB = 0.00005 * this.SAT_IN_DGB
 
     constructor(nowNodesApiKey)
     {
@@ -89,6 +89,7 @@ class DigiByteService
                         'change_address'    : changeAddress,
                         'sent_amount'       : balance
                     };
+                    console.log(txData);
 
                     let result = await this._sendTransaction(transaction)
 
@@ -178,7 +179,7 @@ class DigiByteService
 
                 this.satoshiLeft -= sum
                 if (this.satoshiLeft < this.FEE_TO_SEND_DGB) {
-                    console.log('!!! No satoshi left in send-us')
+                    console.log('!!! No satoshi left in send-us: ' + this.satoshiLeft  + '<' + this.FEE_TO_SEND_DGB)
                 }
             }
         }
