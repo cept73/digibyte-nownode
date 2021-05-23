@@ -1,10 +1,43 @@
 {
 	"info": {
-		"_postman_id": "a0da6b61-bc67-4eee-8c03-461f487f0d6a",
+		"_postman_id": "b912f15f-5c2d-4131-906a-fcb66c01c237",
 		"name": "DigiByteService",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Test connect",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "command",
+						"value": "test-connect",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:60001/test-connect",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "60001",
+					"path": [
+						"test-connect"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Generate wallet",
 			"request": {
@@ -12,8 +45,8 @@
 				"header": [
 					{
 						"key": "command",
-						"value": "test-connect",
 						"type": "text",
+						"value": "test-connect",
 						"disabled": true
 					}
 				],
@@ -28,17 +61,14 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:60001?command=test-connect",
+					"raw": "http://localhost:60001/generate-wallet",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "60001",
-					"query": [
-						{
-							"key": "command",
-							"value": "test-connect"
-						}
+					"path": [
+						"generate-wallet"
 					]
 				}
 			},
@@ -54,7 +84,8 @@
 					"urlencoded": [
 						{
 							"key": "address",
-							"value": "DHKvkQUKWPumhyWF987UzX1TTKgadf72ua",
+							"value": "DQ4QRvRdjy9m9CHg9XUnCiTSmS4bmRqvAs",
+							"description": "L3Vf9B2MVizc7hP7Jw8Y54MVpNfsXLCeXuee5HMk1H85GoRecCwn",
 							"type": "text"
 						}
 					]
@@ -83,7 +114,7 @@
 					"urlencoded": [
 						{
 							"key": "address",
-							"value": "DHKvkQUKWPumhyWF987UzX1TTKgadf72ua",
+							"value": "DAzVirvCyw7PFTCVyjxJcjMrBxyZBcP6Ks",
 							"type": "text"
 						}
 					]
@@ -103,7 +134,7 @@
 			"response": []
 		},
 		{
-			"name": "Send funds",
+			"name": "Send funds to several addresses",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -121,10 +152,30 @@
 							"type": "text"
 						},
 						{
-							"key": "data",
-							"value": "",
-							"type": "text",
-							"disabled": true
+							"key": "operations[0][addr]",
+							"value": "dgb-address-1",
+							"type": "text"
+						},
+						{
+							"key": "operations[0][value]",
+							"value": "0.001",
+							"type": "text"
+						},
+						{
+							"key": "operations[0][times]",
+							"value": "1",
+							"description": "1 by default",
+							"type": "text"
+						},
+						{
+							"key": "operations[1][addr]",
+							"value": "dgb-address-2",
+							"type": "text"
+						},
+						{
+							"key": "operations[1][value]",
+							"value": "0.002",
+							"type": "text"
 						}
 					]
 				},
@@ -143,7 +194,7 @@
 			"response": []
 		},
 		{
-			"name": "Get tx info",
+			"name": "Send funds to admin",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -151,21 +202,36 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "tx",
-							"value": "sometx",
+							"key": "address",
+							"value": "DAzVirvCyw7PFTCVyjxJcjMrBxyZBcP6Ks",
+							"type": "text"
+						},
+						{
+							"key": "privateKey",
+							"value": "L2jhhbaBtv8num3keE51d5L3tKVJAmBMGqcL6Z1CcLMSR9LFgycA",
+							"type": "text"
+						},
+						{
+							"key": "overallSum",
+							"value": "0.003",
+							"type": "text"
+						},
+						{
+							"key": "destinationAddress",
+							"value": "DAzVirvCyw7PFTCVyjxJcjMrBxyZBcP6Ks",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:60001/get-unspent-txo",
+					"raw": "http://localhost:60001/send-funds",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "60001",
 					"path": [
-						"get-unspent-txo"
+						"send-funds"
 					]
 				}
 			},
