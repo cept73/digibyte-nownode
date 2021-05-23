@@ -5,6 +5,7 @@ require('dotenv').config()
 class Controller
 {
     ROUTES = {
+        'test-connect'      : 'actionTestConnect',
         'generate-wallet'   : 'actionGenerateWallet',
         'check-wallet'      : 'actionCheckWallet',
         'get-unspent-txo'   : 'actionGetUnspentTxo',
@@ -17,11 +18,10 @@ class Controller
     run(jsonRequest, finishFunction)
     {
         if (!process.env.NOWNODES_API_KEY) {
-            finishFunction({
+            return finishFunction({
                 'status'    : 'error',
                 'message'   : 'Please set up environment'
             })
-            return
         }
 
         let cmd = jsonRequest.url.substring(1)
@@ -77,12 +77,10 @@ class Controller
     {
         let address = params['address'];
         if (!address) {
-            finishFunction({
+            return finishFunction({
                 'status'    : 'error',
-                'message'   : 'Unknown command'
+                'message'   : 'address is not specified'
             })
-
-            return;
         }
 
         this.DigiByteServiceInstance.getWalletBalance(address).then(
@@ -98,6 +96,12 @@ class Controller
     actionGetUnspentTxo(params, finishFunction)
     {
         let address = params['address']
+        if (!address) {
+            return finishFunction({
+                'status'    : 'error',
+                'message'   : 'address is not specified'
+            })
+        }
 
         this.DigiByteServiceInstance.getUnspentTransactionOutput(address).then(
             (result) => {
@@ -124,6 +128,9 @@ class Controller
 
             let value = paramsArray[indexBase + '[value]'];
             let times = paramsArray[indexBase + '[times]'];
+            if (!times) {
+                times = 1;
+            }
 
             return {
                 address	: address,
@@ -144,7 +151,11 @@ class Controller
             }
         } else {
             let amount = parseFloat(paramsArray['overallSum']) - paymentFee
-            operations = [{ address: process.env.ADMIN_ADDRESS, value: amount, times: 1 }]
+            let address = paramsArray['destinationAddress']
+            if (!address) {
+                address = process.env.ADMIN_ADDRESS;
+            }
+            operations = [{ address: address, value: amount, times: 1 }]
         }
 
         await this.DigiByteServiceInstance.sendFunds(sourcePrivateKey, sourceAddress, operations, console.log).then(
@@ -156,11 +167,26 @@ class Controller
 
     actionGetTxInfo(params, finishFunction)
     {
-        this.DigiByteServiceInstance.getTransactionInfo(params['tx']).then(
+        let tx = params['tx'];
+        if (!tx) {
+            return finishFunction({
+                'status'    : 'error',
+                'message'   : 'tx is not specified'
+            })
+        }
+
+        this.DigiByteServiceInstance.getTransactionInfo(tx).then(
             (result) => {
                 finishFunction(result)
             }
         );
+    }
+
+    actionTestConnect(params, finishFunction)
+    {
+        finishFunction({
+            'status'    : 'ok',
+        })
     }
 }
 
