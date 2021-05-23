@@ -40,7 +40,6 @@ const server = http.createServer((request, response) => {
             await controller.run(
                 responseBody,
                 (result) => {
-                    console.log('!!', result)
                     responseEnd(JSON.stringify(result))
                 }
             )
