@@ -4,4 +4,4 @@ cd /var/www/DigiAssetDividends/node
 date >> /var/www/tick-dad.log
 ./check-run-node >> /var/www/tick-dad.log
 
-curl http://digiassetdividends.com/get-tx-info >> /var/www/tick-dad.log
+curl http://digiassetdividends.com/test-connect >> /var/www/tick-dad.log
