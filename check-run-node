@@ -1,0 +1,13 @@
+#!/bin/bash
+
+URL=localhost:60001
+
+`curl --silent --output /dev/null "$URL"`
+if [ "$?" = "7" ]; then
+    echo "runing dad..."
+    ./start-node
+    exit 1
+fi
+
+echo "dad - ok"
+exit 0
